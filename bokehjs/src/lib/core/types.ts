@@ -7,6 +7,19 @@ export {TypedArray} from "./util/ndarray"
 export type NumberArray = Float64Array
 export const NumberArray = Float64Array
 
+export class RaggedArray {
+  readonly array: NumberArray
+  readonly lengths: Uint16Array
+  readonly offsets: Uint32Array
+  readonly length: number
+
+  get(i: number): NumberArray {
+    const offset = this.offsets[i]
+    const length = this.lengths[i]
+    return this.array.subarray(offset, offset + length)
+  }
+}
+
 export type Arrayable<T = any> = {
   readonly length: number
   [n: number]: T
