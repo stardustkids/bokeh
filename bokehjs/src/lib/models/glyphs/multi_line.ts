@@ -1,4 +1,5 @@
 import {SpatialIndex} from "core/util/spatial"
+import {$project_xsys} from "core/util/projections"
 import {PointGeometry, SpanGeometry} from "core/geometry"
 import {LineVector} from "core/property_mixins"
 import {Line} from "core/visuals"
@@ -25,6 +26,10 @@ export interface MultiLineView extends MultiLineData {}
 export class MultiLineView extends GlyphView {
   model: MultiLine
   visuals: MultiLine.Visuals
+
+  protected _project_data(): void {
+    $project_xsys(this._xs, this._ys)
+  }
 
   protected _index_data(index: SpatialIndex): void {
     const {data_size} = this
